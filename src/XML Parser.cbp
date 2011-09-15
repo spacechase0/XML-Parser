@@ -56,6 +56,10 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="include\xml\Misc.h">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="include\xml\Node.h">
 			<Option target="Debug" />
 			<Option target="Release" />
@@ -72,6 +76,10 @@
 			<Option target="Release" />
 		</Unit>
 		<Unit filename="xml\Document.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="xml\Misc.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
