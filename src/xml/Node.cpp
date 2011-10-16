@@ -223,6 +223,11 @@ namespace xml
 		attributes[ index ] = attribute;
 	}
 	
+	void Node::AddAttribute( const std::string& name, const std::string& value )
+	{
+		AddAttribute( Attribute( name, value ) );
+	}
+	
 	void Node::AddAttribute( const Attribute& attribute )
 	{
 		attributes.push_back( attribute );

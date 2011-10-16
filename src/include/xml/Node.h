@@ -54,6 +54,7 @@ namespace xml
 			Attribute& GetAttribute( size_t index );
 			const Attribute& GetAttribute( size_t index ) const;
 			void SetAttribute( size_t index, const Attribute& attribute );
+			void AddAttribute( const std::string& name, const std::string& value );
 			void AddAttribute( const Attribute& attribute );
 			void AddAttribute( size_t index, const Attribute& attribute );
 			void RemoveAttribute( size_t index );
