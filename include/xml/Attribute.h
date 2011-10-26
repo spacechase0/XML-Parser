@@ -22,35 +22,31 @@
 //
 ////////////////////////////////////////////////////////////
 
-#include <xml/Misc.h>
+#ifndef XML_ATTRIBUTE_H
+#define XML_ATTRIBUTE_H
+
+#include <string>
 
 namespace xml
 {
-	const xml::Node& GetNode( const xml::Node& node, const std::string& name )
+	class Attribute
 	{
-		auto sections = node.GetChildren();
-		for ( auto it = sections.begin(); it != sections.end(); ++it )
-		{
-			if ( ( * it )->GetName() == name )
-			{
-				return ( * ( * it ) );
-			}
-		}
+		public:
+			Attribute();
+			Attribute( const std::string& theName, const std::string& theValue );
+			
+			std::string GetName() const;
+			void SetName( const std::string& theName );
+			
+			std::string GetValue() const;
+			void SetValue( const std::string& theValue );
+			
+			std::string GetAsString() const;
 		
-		return node;
-	}
-	
-	xml::Attribute GetAttribute( const xml::Node& node, const std::string& name )
-	{
-		auto attributes = node.GetAttributes();
-		for ( auto it = attributes.begin(); it != attributes.end(); ++it )
-		{
-			if ( it->GetName() == name )
-			{
-				return ( * it );
-			}
-		}
-		
-		return xml::Attribute();
-	}
+		private:
+			std::string name;
+			std::string value;
+	};
 }
+
+#endif // XML_ATTRIBUTE_H
