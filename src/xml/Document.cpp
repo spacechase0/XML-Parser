@@ -206,7 +206,7 @@ namespace xml
 	
 	Document::NodeStatus Document::ParseNode( const std::string& str, size_t start )
 	{
-		if(start==0){return NodeStatus(Node(),ParseStatus(false,"Huh?",0));}
+		//if(start==0){return NodeStatus(Node(),ParseStatus(false,"Huh?",0));}
 		std::string snippet = "";
 		
 		enum Stage

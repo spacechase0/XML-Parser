@@ -25,8 +25,8 @@
 #ifndef XML_NODE_H
 #define XML_NODE_H
 
-#include <boost/shared_ptr.hpp>
 #include <xml/Attribute.h>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -36,7 +36,7 @@ namespace xml
 	{
 		public:
 			// Typedefs
-			typedef boost::shared_ptr< Node > NodePointer;
+			typedef std::shared_ptr< Node > NodePointer;
 			
 			typedef std::vector< Attribute > AttributeContainer;
 			typedef std::vector< NodePointer > NodeContainer;
@@ -48,7 +48,7 @@ namespace xml
 			Node( const std::string& theName, const AttributeContainer& theAttributes, bool isSelfClosing = false );
 			Node( const std::string& theName, const AttributeContainer& theAttributes, const NodeContainer& theChildren );
 			// I've heard of the copy constructor-assignment operator-destructor triangle thing,
-			// but boost::shared_pointer will take care of the destructor work for us. :)
+			// but std::shared_pointer will take care of the destructor work for us. :)
 			Node& operator = ( const Node& other );
 			
 			// Flags
