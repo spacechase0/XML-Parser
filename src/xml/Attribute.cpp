@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // XML Parser
-// Copyright (C) 2011 Chase Warrington (staff@spacechase0.com)
+// Copyright (C) 2012 Chase Warrington (staff@spacechase0.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -38,27 +38,27 @@ namespace xml
 	{
 	}
 	
-	std::string Attribute::GetName() const
-	{
-		return name;
-	}
-	
-	void Attribute::SetName( const std::string& theName )
+	void Attribute::setName( const std::string& theName )
 	{
 		name = theName;
 	}
 	
-	std::string Attribute::GetValue() const
+	std::string Attribute::getName() const
 	{
-		return value;
+		return name;
 	}
 	
-	void Attribute::SetValue( const std::string& theValue )
+	void Attribute::setValue( const std::string& theValue )
 	{
 		value = theValue;
 	}
 	
-	std::string Attribute::GetAsString() const
+	std::string Attribute::getValue() const
+	{
+		return value;
+	}
+	
+	std::string Attribute::getString() const
 	{
 		std::string toReturn = "";
 		toReturn += name;

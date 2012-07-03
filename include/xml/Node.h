@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // XML Parser
-// Copyright (C) 2011 Chase Warrington (staff@spacechase0.com)
+// Copyright (C) 2012 Chase Warrington (staff@spacechase0.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -44,59 +44,35 @@ namespace xml
 			// Constructors and assignment operator
 			Node();
 			Node( const Node& other );
-			Node( const std::string& theName, bool isSelfClosing = false );
-			Node( const std::string& theName, const AttributeContainer& theAttributes, bool isSelfClosing = false );
-			Node( const std::string& theName, const AttributeContainer& theAttributes, const NodeContainer& theChildren );
-			// I've heard of the copy constructor-assignment operator-destructor triangle thing,
-			// but std::shared_pointer will take care of the destructor work for us. :)
+			Node( const std::string& theName, bool theSelfClosing = false );
+			Node( const std::string& theName, const std::vector< Attribute >& theAttributes, bool isSelfClosing = false );
+			Node( const std::string& theName, const std::vector< Attribute >& theAttributes, const NodeContainer& theChildren );
 			Node& operator = ( const Node& other );
 			
-			// Flags
-			bool IsSelfClosing() const;
-			void IsSelfClosing( bool isSelfClosing );
+			void setSelfClosing( bool theSelfClosing );
+			bool isSelfClosing() const;
 			
-			bool IsCharacterData() const;
-			void IsCharacterData( bool isCharData );
+			void setCharacterData( bool theCharData );
+			static bool isValidCharacterData( const std::string& theText );
+			bool isCharacterData() const;
 			
-			bool IsTextNode() const;
-			void IsTextNode( bool isTextNode );
+			void setTextNode( bool theTextNode );
+			bool isTextNode() const;
 			
-			std::string GetText() const;
-			void SetText( const std::string theText );
-			bool IsTextValid( const std::string& theText ) const;
+			void setText( const std::string theText );
+			std::string getText() const;
 			
-			// Name
-			std::string GetName() const;
-			void SetName( const std::string& theName );
-			static bool IsNameValid( const std::string& theName );
+			void setName( const std::string& theName );
+			static bool isNameValid( const std::string& theName );
+			std::string getName() const;
 			
-			// Attributes
-			size_t GetAttributeAmount() const;
-			const AttributeContainer& GetAttributes() const;
-			void SetAttributes( const AttributeContainer& theAttributes );
+			void setAttributes( const std::vector< Attribute >& theAttributes );
+			const std::vector< Attribute >& getAttributes() const;
 			
-			Attribute& GetAttribute( size_t index );
-			const Attribute& GetAttribute( size_t index ) const;
-			void SetAttribute( size_t index, const Attribute& attribute );
-			void AddAttribute( const std::string& name, const std::string& value );
-			void AddAttribute( const Attribute& attribute );
-			void AddAttribute( size_t index, const Attribute& attribute );
-			void RemoveAttribute( size_t index );
+			void setChildren( const std::vector< std::shared_ptr< Node > >& theChildren );
+			const std::vector< std::shared_ptr< Node > >& getChildren() const;
 			
-			// Children
-			size_t GetChildAmount() const;
-			const NodeContainer& GetChildren() const;
-			void SetChildren( const NodeContainer& theChildren );
-			
-			Node& GetChild( size_t index );
-			const Node& GetChild( size_t index ) const;
-			void SetChild( size_t index, const Node& child );
-			void AddChild( const Node& child );
-			void AddChild( size_t index, const Node& child );
-			void RemoveChild( size_t index );
-			
-			// Misc.
-			std::string GetAsString() const;
+			std::string getString() const;
 		
 		private:
 			enum Flag
@@ -108,8 +84,8 @@ namespace xml
 			};
 			
 			std::string name;
-			AttributeContainer attributes;
-			NodeContainer children;
+			std::vector< Attribute > attributes;
+			std::vector< std::shared_ptr< Node > > children;
 			Flag flag;
 			std::string text;
 			

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // XML Parser
-// Copyright (C) 2011 Chase Warrington (staff@spacechase0.com)
+// Copyright (C) 2012 Chase Warrington (staff@spacechase0.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,8 +30,8 @@
 
 namespace xml
 {
-	const xml::Node& GetNode( const xml::Node& node, const std::string& name );
-	xml::Attribute GetAttribute( const xml::Node& node, const std::string& name );
+	const xml::Node& getNode( const xml::Node& node, const std::string& name );
+	xml::Attribute getAttribute( const xml::Node& node, const std::string& name );
 }
 
 #endif // XML_MISC_H

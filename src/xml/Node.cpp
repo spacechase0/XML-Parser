@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // XML Parser
-// Copyright (C) 2011 Chase Warrington (staff@spacechase0.com)
+// Copyright (C) 2012 Chase Warrington (staff@spacechase0.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -44,7 +44,7 @@ namespace xml
 	     flag( other.flag ),
 	     text( other.text )
 	{
-		SetChildren( other.children );
+		setChildren( other.children );
 	}
 	
 	Node::Node( const std::string& theName, bool isSelfClosing )
@@ -55,7 +55,7 @@ namespace xml
 	{
 	}
 	
-	Node::Node( const std::string& theName, const AttributeContainer& theAttributes, bool isSelfClosing )
+	Node::Node( const std::string& theName, const std::vector< Attribute >& theAttributes, bool isSelfClosing )
 	   : name( theName ),
 	     attributes( theAttributes ),
 	     children(),
@@ -63,76 +63,72 @@ namespace xml
 	{
 	}
 	
-	Node::Node( const std::string& theName, const AttributeContainer& theAttributes, const NodeContainer& theChildren )
+	Node::Node( const std::string& theName, const std::vector< Attribute >& theAttributes, const std::vector< std::shared_ptr< Node > >& theChildren )
 	   : name( theName ),
 	     attributes( theAttributes ),
 	     children(),
 	     flag( None )
 	{
-		SetChildren( theChildren );
+		setChildren( theChildren );
 	}
 	
 	Node& Node::operator = ( const Node& other )
 	{
-		SetName( other.name );
-		SetAttributes( other.attributes );
-		SetChildren( other.children );
+		setName( other.name );
+		setAttributes( other.attributes );
+		setChildren( other.children );
 		flag = other.flag;
 		text = other.text;
 		
 		return ( * this );
 	}
 	
-	bool Node::IsSelfClosing() const
+	void Node::setSelfClosing( bool theSelfClosing )
 	{
-		return flag == SelfClosing;
-	}
-	
-	void Node::IsSelfClosing( bool isSelfClosing )
-	{
-		if ( isSelfClosing != IsSelfClosing() )
+		if ( theSelfClosing != isSelfClosing() )
 		{
-			flag = isSelfClosing ? SelfClosing : None;
+			flag = theSelfClosing ? SelfClosing : None;
 			children.clear();
 		}
 	}
 	
-	bool Node::IsCharacterData() const
+	
+	bool Node::isSelfClosing() const
+	{
+		return flag == SelfClosing;
+	}
+	
+	void Node::setCharacterData( bool theCharData )
+	{
+		if ( theCharData != isCharacterData() )
+		{
+			flag = theCharData ? CharacterData : None;
+			text.clear();
+		}
+	}
+	
+	bool Node::isCharacterData() const
 	{
 		return flag == CharacterData;
 	}
 	
-	void Node::IsCharacterData( bool isCharData )
+	void Node::setTextNode( bool theTextNode )
 	{
-		if ( isCharData != IsCharacterData() )
+		if ( theTextNode != isTextNode() )
 		{
-			flag = isCharData ? CharacterData : None;
+			flag = theTextNode ? TextNode : None;
 			text.clear();
 		}
 	}
 	
-	bool Node::IsTextNode() const
+	bool Node::isTextNode() const
 	{
 		return flag == TextNode;
 	}
 	
-	void Node::IsTextNode( bool isTextNode )
+	void Node::setText( const std::string theText )
 	{
-		if ( isTextNode != IsTextNode() )
-		{
-			flag = isTextNode ? TextNode : None;
-			text.clear();
-		}
-	}
-	
-	std::string Node::GetText() const
-	{
-		return text;
-	}
-	
-	void Node::SetText( const std::string theText )
-	{
-		if ( !IsTextValid( theText ) )
+		if ( !isValidCharacterData( theText ) )
 		{
 			return;
 		}
@@ -140,13 +136,13 @@ namespace xml
 		text = theText;
 	}
 	
-	bool Node::IsTextValid( const std::string& theText ) const
+	std::string Node::getText() const
 	{
-		if ( flag != CharacterData )
-		{
-			return true;
-		}
-		
+		return text;
+	}
+	
+	bool Node::isValidCharacterData( const std::string& theText )
+	{
 		if ( theText.find( "]]>" ) != std::string::npos )
 		{
 			return false;
@@ -155,14 +151,9 @@ namespace xml
 		return true;
 	}
 	
-	std::string Node::GetName() const
+	void Node::setName( const std::string& theName )
 	{
-		return name;
-	}
-	
-	void Node::SetName( const std::string& theName )
-	{
-		if ( !IsNameValid( theName ) )
+		if ( !isNameValid( theName ) )
 		{
 			return;
 		}
@@ -170,10 +161,15 @@ namespace xml
 		name = theName;
 	}
 	
-	bool Node::IsNameValid( const std::string& theName )
+	std::string Node::getName() const
 	{
-		static std::string invalidStartingCharacters = "-.0123456789";
-		static std::string invalidCharacters = "!\"#$%&'()*+,/;<=>?@[\\]^`{|}~ ";
+		return name;
+	}
+	
+	bool Node::isNameValid( const std::string& theName )
+	{
+		static const std::string invalidStartingCharacters = "-.0123456789";
+		static const std::string invalidCharacters = "!\"#$%&'()*+,/;<=>?@[\\]^`{|}~ ";
 		
 		if ( theName.length() == 0 )
 		{
@@ -202,93 +198,17 @@ namespace xml
 		return true;
 	}
 	
-	size_t Node::GetAttributeAmount() const
-	{
-		return attributes.size();
-	}
-	
-	const Node::AttributeContainer& Node::GetAttributes() const
-	{
-		return attributes;
-	}
-	
-	void Node::SetAttributes( const AttributeContainer& theAttributes )
+	void Node::setAttributes( const std::vector< Attribute >& theAttributes )
 	{
 		attributes = theAttributes;
 	}
 	
-	Attribute& Node::GetAttribute( size_t index )
+	const std::vector< Attribute >& Node::getAttributes() const
 	{
-		if ( index >= GetAttributeAmount() )
-		{
-			return dummyAttribute;
-		}
-		
-		return attributes[ index ];
+		return attributes;
 	}
 	
-	const Attribute& Node::GetAttribute( size_t index ) const
-	{
-		if ( index >= GetAttributeAmount() )
-		{
-			return dummyAttribute;
-		}
-		
-		return attributes[ index ];
-	}
-	
-	void Node::SetAttribute( size_t index, const Attribute& attribute )
-	{
-		if ( index >= GetAttributeAmount() )
-		{
-			return;
-		}
-		
-		attributes[ index ] = attribute;
-	}
-	
-	void Node::AddAttribute( const std::string& name, const std::string& value )
-	{
-		AddAttribute( Attribute( name, value ) );
-	}
-	
-	void Node::AddAttribute( const Attribute& attribute )
-	{
-		attributes.push_back( attribute );
-	}
-	
-	void Node::AddAttribute( size_t index, const Attribute& attribute )
-	{
-		if ( index >= GetAttributeAmount() )
-		{
-			AddAttribute( attribute );
-			return;
-		}
-		
-		attributes.insert( attributes.begin() + index, attribute );
-	}
-	
-	void Node::RemoveAttribute( size_t index )
-	{
-		if ( index >= GetAttributeAmount() )
-		{
-			return;
-		}
-		
-		attributes.erase( attributes.begin() + index );
-	}
-	
-	size_t Node::GetChildAmount() const
-	{
-		return children.size();
-	}
-	
-	const Node::NodeContainer& Node::GetChildren() const
-	{
-		return children;
-	}
-	
-	void Node::SetChildren( const NodeContainer& theChildren )
+	void Node::setChildren( const std::vector< std::shared_ptr< Node > >& theChildren )
 	{
 		children.clear();
 		for ( auto it = theChildren.begin(); it != theChildren.end(); ++it )
@@ -299,70 +219,19 @@ namespace xml
 		}
 	}
 	
-	Node& Node::GetChild( size_t index )
+	const std::vector< std::shared_ptr< Node > >& Node::getChildren() const
 	{
-		if ( index >= GetChildAmount() )
-		{
-			return dummyNode;
-		}
-		
-		return ( * children[ index ] );
+		return children;
 	}
 	
-	const Node& Node::GetChild( size_t index ) const
-	{
-		if ( index >= GetChildAmount() )
-		{
-			return dummyNode;
-		}
-		
-		return ( * children[ index ] );
-	}
-	
-	void Node::SetChild( size_t index, const Node& child )
-	{
-		if ( index >= GetChildAmount() )
-		{
-			return;
-		}
-		
-		( * children[ index ] ) = child;
-	}
-	
-	void Node::AddChild( const Node& child )
-	{
-		children.push_back( NodePointer( new Node( child ) ) );
-	}
-	
-	void Node::AddChild( size_t index, const Node& child )
-	{
-		if ( index >= GetChildAmount() )
-		{
-			AddChild( child );
-			return;
-		}
-		
-		children.insert( children.begin() + index, NodePointer( new Node( child ) ) );
-	}
-	
-	void Node::RemoveChild( size_t index )
-	{
-		if ( index >= GetChildAmount() )
-		{
-			return;
-		}
-		
-		children.erase( children.begin() + index );
-	}
-	
-	std::string Node::GetAsString() const
+	std::string Node::getString() const
 	{
 		std::string toReturn;
-		if ( IsTextNode() )
+		if ( isTextNode() )
 		{
 			toReturn = text;
 		}
-		else if ( IsCharacterData() )
+		else if ( isCharacterData() )
 		{
 			toReturn =  "<![CDATA[";
 			toReturn += text;
@@ -375,10 +244,10 @@ namespace xml
 			for ( auto it = attributes.begin(); it != attributes.end(); ++it )
 			{
 				toReturn += " ";
-				toReturn += it->GetAsString();
+				toReturn += it->getString();
 			}
 			
-			if ( IsSelfClosing() )
+			if ( isSelfClosing() )
 			{
 				toReturn += " />";
 			}
@@ -389,10 +258,10 @@ namespace xml
 				for ( auto it = children.begin(); it != children.end(); ++it )
 				{
 					toReturn += "\r\n";
-					toReturn += ( * it )->GetAsString();
+					toReturn += ( * it )->getString();
 				}
 				
-				if ( GetChildAmount() != 0 )
+				if ( getChildren().size() != 0 )
 				{
 					toReturn += "\r\n";
 				}
