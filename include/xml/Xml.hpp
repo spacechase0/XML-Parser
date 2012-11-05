@@ -22,16 +22,12 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef XML_MISC_H
-#define XML_MISC_H
+#ifndef XML_XML_HPP
+#define XML_XML_HPP
 
-#include <xml/Node.h>
-#include <xml/Attribute.h>
+#include <xml/Attribute.hpp>
+#include <xml/Node.hpp>
+#include <xml/Document.hpp>
+#include <xml/Misc.hpp>
 
-namespace xml
-{
-	const xml::Node& getNode( const xml::Node& node, const std::string& name );
-	xml::Attribute getAttribute( const xml::Node& node, const std::string& name );
-}
-
-#endif // XML_MISC_H
+#endif // XML_XML_HPP

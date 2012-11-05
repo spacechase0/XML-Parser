@@ -31,11 +31,11 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include )
 set( INCROOT ${PROJECT_SOURCE_DIR}/include )
 set( SRCROOT ${PROJECT_SOURCE_DIR}/src )
 
-set( INC ${INCROOT}/xml/Document.h
-		 ${INCROOT}/xml/Node.h
-		 ${INCROOT}/xml/Attribute.h
-		 ${INCROOT}/xml/Misc.h
-		 ${INCROOT}/xml/Xml.h )
+set( INC ${INCROOT}/xml/Document.hpp
+		 ${INCROOT}/xml/Node.hpp
+		 ${INCROOT}/xml/Attribute.hpp
+		 ${INCROOT}/xml/Misc.hpp
+		 ${INCROOT}/xml/Xml.hpp )
 
 set( SRC ${SRCROOT}/xml/Document.cpp
 		 ${SRCROOT}/xml/Node.cpp

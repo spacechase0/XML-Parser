@@ -22,10 +22,10 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef XML_NODE_H
-#define XML_NODE_H
+#ifndef XML_NODE_HPP
+#define XML_NODE_HPP
 
-#include <xml/Attribute.h>
+#include <xml/Attribute.hpp>
 #include <memory>
 #include <string>
 #include <vector>
@@ -94,4 +94,4 @@ namespace xml
 	};
 }
 
-#endif // XML_NODE_H
+#endif // XML_NODE_HPP

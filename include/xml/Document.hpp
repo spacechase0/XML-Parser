@@ -22,13 +22,12 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef XML_DOCUMENT_H
-#define XML_DOCUMENT_H
+#ifndef XML_DOCUMENT_HPP
+#define XML_DOCUMENT_HPP
 
-#include <xml/Attribute.h>
-#include <xml/Node.h>
+#include <xml/Attribute.hpp>
+#include <xml/Node.hpp>
 #include <string>
-#include <tuple>
 
 namespace xml
 {
@@ -92,4 +91,4 @@ namespace xml
 	};
 }
 
-#endif // XML_DOCUMENT_H
+#endif // XML_DOCUMENT_HPP

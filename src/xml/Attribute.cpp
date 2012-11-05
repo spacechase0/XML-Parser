@@ -22,7 +22,7 @@
 //
 ////////////////////////////////////////////////////////////
 
-#include <xml/Attribute.h>
+#include <xml/Attribute.hpp>
 
 namespace xml
 {

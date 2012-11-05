@@ -22,7 +22,7 @@
 //
 ////////////////////////////////////////////////////////////
 
-#include <xml/Document.h>
+#include <xml/Document.hpp>
 
 namespace xml
 {

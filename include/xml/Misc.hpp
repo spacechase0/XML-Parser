@@ -22,31 +22,16 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef XML_ATTRIBUTE_H
-#define XML_ATTRIBUTE_H
+#ifndef XML_MISC_HPP
+#define XML_MISC_HPP
 
-#include <string>
+#include <xml/Node.hpp>
+#include <xml/Attribute.hpp>
 
 namespace xml
 {
-	class Attribute
-	{
-		public:
-			Attribute();
-			Attribute( const std::string& theName, const std::string& theValue );
-			
-			void setName( const std::string& theName );
-			std::string getName() const;
-			
-			void setValue( const std::string& theValue );
-			std::string getValue() const;
-			
-			std::string getString() const;
-		
-		private:
-			std::string name;
-			std::string value;
-	};
+	const xml::Node& getNode( const xml::Node& node, const std::string& name );
+	xml::Attribute getAttribute( const xml::Node& node, const std::string& name );
 }
 
-#endif // XML_ATTRIBUTE_H
+#endif // XML_MISC_HPP
