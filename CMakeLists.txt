@@ -8,15 +8,15 @@ if ( NOT CMAKE_BUILD_TYPE )
 endif()
 
 # Boost
-find_package( Boost )
-if ( Boost_FOUND )
-    include_directories( ${Boost_INCLUDE_DIR} )
-else()
-	message( FATAL_ERROR "We need Boost!" )
-endif()
+#find_package( Boost )
+#if ( Boost_FOUND )
+#    include_directories( ${Boost_INCLUDE_DIR} )
+#else()
+#	message( FATAL_ERROR "We need Boost!" )
+#endif()
 
 # Misc
-set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=gnu++0x" )
+set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++0x" )
 
 # Project
 project( "XML Parser" )
